@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  passwordHash String
+  createdAt DateTime @default(now())
+  favorites Favorite[]
+  preferences Preference[]
+
+  History History[]
+}
+
+model Receipe {
+  id String @id @default(uuid())
+  title String
+  category String?
+  area String?
+  instructions String?
+  thumbnailUrl String?
+  youtubeUrl String?
+  sourceUrl String?
+
+  ingredients RecipeIngredient[]
+  favourites Favorite[]
+  histories History[]
+  moods RecipeMood[]
+}
+
+model Mood {
+  id String @id @default(uuid())
+  name String @unique
+  recipes RecipeMood[]
+}
+
+model RecipeMood  {
+  id String @id @default(uuid())
+  recipeId String @unique
+  moodId String
+
+  recipe Receipe @relation(fields: [recipeId],references: [id])
+  mood Mood @relation(fields: [moodId],references: [id])
+
+  @@unique([recipeId,moodId])
+}
+
+model History  {
+  id String @id @default(uuid())
+  userId String
+  recipeId String
+  cookedAt DateTime @default(now())
+
+  user User @relation(fields: [userId],references: [id])
+  recipe Receipe @relation(fields: [recipeId],references: [id])
+}
+
+model Ingredient {
+  id String @id @default(uuid())
+  name String @unique
+  unit String?
+
+  recipeLinks RecipeIngredient[]
+  preferences Preference[]
+}
+
+model RecipeIngredient {
+  id String @id @default(uuid())
+  recipeId String
+  ingredientId String
+  measure String?
+
+  recipe Receipe @relation(fields: [recipeId],references: [id])
+  ingredient Ingredient @relation(fields: [ingredientId],references: [id])
+
+  @@unique([recipeId,ingredientId])
+}
+
+model Preference {
+  id String @id @default(uuid())
+  userId String
+  ingredientId String
+  type PreferenceType
+
+  user User @relation(fields: [userId],references: [id])
+  ingredient Ingredient @relation(fields: [ingredientId],references: [id])
+
+  @@unique([userId,ingredientId])
+}
+
+model Favorite {
+  id String @id @default(uuid())
+  userId String
+  recipeId String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId],references: [id])
+  recipe Receipe @relation(fields: [recipeId],references: [id])
+
+  @@unique([userId,recipeId])
+}
+
+enum PreferenceType {
+  like
+  dislike
+}
