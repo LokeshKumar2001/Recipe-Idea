@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -60,6 +61,7 @@ export const useAppStore = create(
         set({ theme: get().theme === "light" ? "dark" : "light" }),
       setTheme: (theme) => set({ theme }),
     }),
+
     {
       name: "app-storage",
     }

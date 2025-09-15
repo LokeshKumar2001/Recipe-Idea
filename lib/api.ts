@@ -10,8 +10,6 @@ export const searchMeals = async (query: string) => {
 };
 
 export const getMealById = async (id: string) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-
   try {
     const api1 = process.env.NEXT_PUBLIC_BASE_URL;
     const res = await axios.get(`${api1}i=${id}`);

@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import { getMealById } from "../../../../lib/api";
 import Link from "next/link";
@@ -37,8 +36,8 @@ function extractingIngredients(recipe: RecipeRaw): IngredientProps[] {
 
 // eslint-disable-next-line @next/next/no-async-client-component
 export default async function RecipeDetails({ params }: RecipeDetailsProps) {
-  // const { theme } = useAppStore();
   const recipe = await getMealById(params.id);
+
   const ingredients: IngredientProps[] = extractingIngredients(recipe);
 
   if (!recipe) {
