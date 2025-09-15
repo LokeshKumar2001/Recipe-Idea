@@ -4,10 +4,12 @@ import SearchBar from "@/components/searchBar";
 import { useState } from "react";
 import { searchMeals } from "../../../lib/api";
 import ReceipeCard, { RecipeCardProps } from "@/components/ReceipeCard";
+import { useAppStore } from "@/store/appStore";
 
 const RecipePage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([]);
+  const { theme } = useAppStore();
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async (query: string) => {
@@ -16,7 +18,7 @@ const RecipePage = () => {
     console.log(recipes);
   };
   return (
-    <div className="p-6">
+    <div className={`p-6 `}>
       <h1 className="text-3xl font-bold mb-3">Receipe Idea</h1>
       <SearchBar onSearch={handleSearch} />
 

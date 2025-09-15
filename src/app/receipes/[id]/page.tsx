@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import { getMealById } from "../../../../lib/api";
 import Link from "next/link";
+import { useAppStore } from "@/store/appStore";
 
 interface RecipeDetailsProps {
   params: {
@@ -33,7 +35,9 @@ function extractingIngredients(recipe: RecipeRaw): IngredientProps[] {
   return ingredients;
 }
 
+// eslint-disable-next-line @next/next/no-async-client-component
 export default async function RecipeDetails({ params }: RecipeDetailsProps) {
+  // const { theme } = useAppStore();
   const recipe = await getMealById(params.id);
   const ingredients: IngredientProps[] = extractingIngredients(recipe);
 
@@ -42,7 +46,9 @@ export default async function RecipeDetails({ params }: RecipeDetailsProps) {
   }
 
   return (
-    <div className="ml-8 mx-auto space-y-2 ">
+    <div
+      className={`ml-8 mx-auto space-y-2 min-h-screen px-6 py-12 transition-colors duration-300 mt-5 `}
+    >
       <h1 className="text-2xl font-bold mb-4">{recipe.strMeal}</h1>
       {recipe.strTags && (
         <p className="text-sm text-gray-600">

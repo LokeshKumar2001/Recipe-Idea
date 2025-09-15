@@ -1,7 +1,20 @@
+"use client";
+import { useAppStore } from "@/store/appStore";
 import React, { ReactNode } from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <section className="pt-16 px-4 max-w-6xl mx-auto">{children}</section>;
+  const { theme } = useAppStore();
+  return (
+    <section
+      className={`pt-16 px-4 max-w-6xl mx-auto min-h-screen  py-12 transition-colors duration-300 mt-5 ${
+        theme === "dark"
+          ? "bg-gray-900 text-gray-100"
+          : "bg-gray-50 text-gray-900"
+      }`}
+    >
+      {children}
+    </section>
+  );
 };
 
 export default Layout;
