@@ -30,11 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProviderWrapper>
-          <Navbar />
-          {children}
-          <Footer />
-        </ThemeProviderWrapper>
+        {/* <ThemeProvider attribute="data-theme" defaultTheme="light"> */}
+        <Navbar />
+        {children}
+        <Footer />
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );
