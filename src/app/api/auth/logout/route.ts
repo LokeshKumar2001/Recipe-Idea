@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
-import { useRouter } from "next/navigation";
 
 export async function POST() {
   const cookieStore = cookies();
